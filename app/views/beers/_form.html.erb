@@ -15,14 +15,11 @@
     <%= f.label :name %><br>
     <%= f.text_field :name %>
   </div>
-  <div class="field">
-    <%= f.label :style %><br>
-    <%= f.text_field :style %>
-  </div>
-  <div class="field">
-    <%= f.label :brewery_id %><br>
-    <%= f.number_field :brewery_id %>
-  </div>
+  <%= f.select :style, options_for_select(@styles) %>
+  <br>
+  <br>
+  <%= f.select :brewery_id, options_from_collection_for_select(@breweries, :id, :name) %>
+  <br>
   <div class="actions">
     <%= f.submit %>
   </div>
