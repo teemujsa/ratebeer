@@ -1,1 +1,2 @@
 [![Build Status](https://travis-ci.org/mluukkai/ratebeer-public.png)](https://travis-ci.org/teemujsa/ratebeer)
+[![Code Climate](https://codeclimate.com/github/teemujsa/ratebeer.png)](https://codeclimate.com/github/teemujsa/ratebeer)
