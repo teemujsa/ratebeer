@@ -10,6 +10,14 @@ has made <%= @user.ratings.count %> ratings with average score <%= @user.average
 member of <% @user.beer_clubs.each do |beer_club| %>
 	<%= link_to beer_club.name, beer_club %> 	
 <% end %>
+<br>
+<br>
+Favorite beer: <%= @user.favorite_beer %>
+<br>
+<br>
+Favorite brewery: <%= @user.favorite_brewery %>
+<br>
+<br>
 <p>
 <b>ratings</b>
 <ul>
@@ -17,7 +25,7 @@ member of <% @user.beer_clubs.each do |beer_club| %>
    <li>
    	<%= rating %> 
 	<% if @user == current_user %>
-   		<%= link_to 'delete', method: :delete, data: { confirm: 'Are you sure?' } %>
+   		<%= link_to 'delete', rating, method: :delete, data: { confirm: 'Are you sure?' } %>
 	<% end %>
    	</li>
  <% end %>
