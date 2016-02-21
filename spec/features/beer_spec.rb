@@ -9,7 +9,7 @@ describe "Beer" do
 
   it "is added to database if name is valid" do
     visit new_beer_path
-    save_and_open_page
+    #save_and_open_page
     fill_in('beer_name', with:'validi')
 
     expect{
@@ -19,7 +19,7 @@ describe "Beer" do
 
   it "is not added to database if name is invalid" do
     visit new_beer_path
-    save_and_open_page
+    #save_and_open_page
     fill_in('beer_name', with:'')
     click_button "Create Beer"
     expect(page).to have_content "Name can't be blank"

@@ -1,0 +1,14 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <h1><%= @place.name %></h1>
+</p>
+<br>
+<%= @place.street %>
+<br>
+<br>
+<%= @place.zip %> <%= @place.city %>
+<br>
+<br>
+<%= content_tag(:iframe,'', width: 450, height: 450, src: "https://www.google.com/maps/embed/v1/place?key=AIzaSyBFA6Ji90Een72rL156NDYN9a6CkBxVlX4
+    &q=#{@place.street}, #{@place.city}, #{@place.country}") %>
