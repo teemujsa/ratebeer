@@ -90,12 +90,14 @@ RSpec.describe User, type: :model do
     end
 
     it "is the style of the highest average rating" do
-      create_beer_with_rating_with_style(user, 10, "IPA")
-      create_beer_with_rating_with_style(user, 30, "IPA")
-      create_beer_with_rating_with_style(user, 15, "IPA")
-      best = create_beer_with_rating_with_style(user, 25, "Lager")
-      create_beer_with_rating_with_style(user, 35, "Lager")
-      create_beer_with_rating_with_style(user, 15, "Lager")
+      style1 = FactoryGirl.create :style
+      style2 = FactoryGirl.create :style
+      create_beer_with_rating_with_style(user, 10, style1)
+      create_beer_with_rating_with_style(user, 30, style1)
+      create_beer_with_rating_with_style(user, 15, style1)
+      best = create_beer_with_rating_with_style(user, 25, style2)
+      create_beer_with_rating_with_style(user, 35, style2)
+      create_beer_with_rating_with_style(user, 15, style2)
       expect(user.favorite_style).to eq(best.style)
     end
   end
@@ -145,7 +147,7 @@ def create_beers_with_ratings(user, *scores)
 end
 
 def create_beer_with_rating_with_style(user, score, style)
-  beer = FactoryGirl.create(:beer)
+  beer = FactoryGirl.create(:beer, style:style)
   FactoryGirl.create(:rating, score:score, beer:beer, user:user)
   beer
 end

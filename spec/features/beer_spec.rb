@@ -5,6 +5,7 @@ describe "Beer" do
   before :each do
   	FactoryGirl.create :user
     sign_in(username:"Pekka", password:"Foobar1")
+    FactoryGirl.create :style
   end
 
   it "is added to database if name is valid" do
