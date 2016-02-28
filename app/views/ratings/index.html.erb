@@ -1,14 +1,78 @@
 <p id="notice"><%= notice %></p>
+<div class="row">
+  <div class="col-md-4">
+  <h2> Top 3 beers </h2>
+
+  <%= render 'list', topItems: @top3Beers %>
+  </div>
+
+  <div class="col-md-4">
+  <h2> Top 3 breweries </h2>
+
+  <%= render 'list', topItems: @top3Breweries %>
+  </div>
+
+  <div class="col-md-4">
+  <h2> Top 3 styles </h2>
+
+  <%= render 'list', topItems: @top3Styles %>
+  </div>
+</div>
+
+<h2> Top 3 raters </h2>
+
+<table class="table table-hover">
+  <thead>
+  <tr>
+    <th>Name</th>
+    <th>Favorite beer</th>
+    <th>Preferred style</th>
+    <th>Favorite brewery</th>
+    <th>Ratings</th>
+  </tr>
+  </thead>
+  
+  <tbody>
+    <ul>
+   <% @top3Raters.each do |rater| %>
+   <tr>
+        <td><%= link_to rater, rater %></td>
+        <td><%= rater.favorite_beer %></td>
+        <td><%= rater.favorite_style %></td>
+        <td><%= rater.favorite_brewery %></td>
+        <td><%= rater.ratings.count %></td>
+     </tr>
+   <% end %>
+  </ul>
+  </tbody>
+</table>
+
+<h2> Recent ratings </h2>
+
+<table class="table table-hover">
+  <tbody>
+    <ul>
+   <% @recent.each do |rating| %>
+   <tr>
+        <td><%= rating %></td>
+     </tr>
+   <% end %>
+  </ul>
+  </tbody>
+</table>
 
 <h1>List of ratings</h1>
 
-<table>
+<table class="table table-hover">
 
   <tbody>
   <p> Number of ratings: <%= @ratings.count %> </p>
     <ul>
 	 <% @ratings.each do |rating| %>
-	   <li> <%= rating %> <%= link_to rating.user.username, rating.user %> </li> </li>
+	 <tr>
+        <td><%= rating %></td>
+        <td><%= link_to rating.user.username, rating.user %></td>
+     </tr>
 	 <% end %>
 	</ul>
   </tbody>

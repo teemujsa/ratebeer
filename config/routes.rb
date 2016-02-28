@@ -1,7 +1,9 @@
 Rails.application.routes.draw do
   resources :memberships, only: [:index, :new, :create, :destroy]
   resources :beer_clubs
-  resources :users
+  resources :users do
+    post 'toggle_activity', on: :member
+  end
   root 'breweries#index'
   get 'kaikki_bisset', to: 'beers#index'
   #get 'ratings', to: 'ratings#index'
@@ -10,7 +12,9 @@ Rails.application.routes.draw do
   get 'signup', to: 'users#new'
   resources :ratings, only: [:index, :new, :create, :destroy]
   resources :beers
-  resources :breweries
+  resources :breweries do
+    post 'toggle_activity', on: :member
+  end
   resource :session, only: [:new, :create, :destroy]
   get 'signin', to: 'sessions#new'
   delete 'signout', to: 'sessions#destroy'

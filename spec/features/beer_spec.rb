@@ -12,7 +12,6 @@ describe "Beer" do
     visit new_beer_path
     #save_and_open_page
     fill_in('beer_name', with:'validi')
-
     expect{
       click_button "Create Beer"
     }.to change{Beer.count}.from(0).to(1)

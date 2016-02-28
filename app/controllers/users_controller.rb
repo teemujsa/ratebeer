@@ -25,7 +25,7 @@ class UsersController < ApplicationController
   # POST /users.json
   def create
     @user = User.new(user_params)
-
+    @user.active = true
     respond_to do |format|
       if @user.save
         format.html { redirect_to @user, notice: 'User was successfully created.' }
@@ -59,6 +59,15 @@ class UsersController < ApplicationController
       format.html { redirect_to users_url, notice: 'User was successfully destroyed.' }
       format.json { head :no_content }
     end
+  end
+
+  def toggle_activity
+    user = User.find(params[:id])
+    user.update_attribute :active, (not user.active)
+
+    new_status = user.active? ? "active" : "frozen"
+
+    redirect_to :back, notice:"user activity status changed to #{new_status}"
   end
 
   private

@@ -10,6 +10,14 @@ class User < ActiveRecord::Base
 	validate :password_has_numbers
 	validate :password_has_upper_case
 
+    def self.top(n)
+        User.all.sort_by{ |b| -(b.ratings.count||0) }.take(n)
+    end
+
+    def to_s
+        self.username
+    end
+
 	def password_has_numbers
 		if not(password =~ /\d/)
 	      errors.add(:password, "doesn't have numbers")
@@ -24,30 +32,25 @@ class User < ActiveRecord::Base
 
 	def favorite_beer
     	return nil if ratings.empty?   # palautetaan nil jos reittauksia ei ole
-    	ratings.group_by{|r| r.beer}
-            .inject{|highest,x| max_rating(highest,x)}.first
+    	ratings.sort_by{|r| -r.score}.first.beer
     end
 
     def favorite_style
-    	return nil if ratings.empty?
-    	ratings.group_by{|r| r.beer.style}
-    		.inject{|highest,x| max_rating(highest,x)}.first
+    	favorite :style
     end
 
     def favorite_brewery
+    	favorite :brewery
+    end
+
+    def favorite(category)
     	return nil if ratings.empty?
-    	ratings.group_by{|r| r.beer.brewery}
-    		.inject{|highest,x| max_rating(highest,x)}.first
+    	rated = ratings.map{ |r| r.beer.send(category) }.uniq
+    	rated.sort_by { |item| -rating_of(category, item) }.first
     end
 
-    def max_rating(ratings1, ratings2)
-    	ave1 = average_rating_helper(ratings1[1])
-    	ave2 = average_rating_helper(ratings2[1])
-    	return ratings1 if ave1 > ave2
-    	ratings2
-    end
-
-    def average_rating_helper(rates)
-    	rates.map{|x| x.score}.inject{|sum,y| sum + y} / ratings.count
-    end
+    def rating_of(category, item)
+	    ratings_of = ratings.select{ |r| r.beer.send(category)==item }
+	    ratings_of.map(&:score).inject(&:+) / ratings_of.count.to_f
+	end
 end

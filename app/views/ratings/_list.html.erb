@@ -1,0 +1,19 @@
+<table class="table table-hover">
+  <thead>
+  <tr>
+    <th>Name</th>
+    <th>Average</th>
+  </tr>
+  </thead>
+  
+  <tbody>
+    <ul>
+   <% topItems.each do |topItem| %>
+   <tr>
+        <td><%= link_to topItem, topItem %></td>
+        <td><%= round(topItem.average_rating) %></td>
+     </tr>
+   <% end %>
+  </ul>
+  </tbody>
+</table>

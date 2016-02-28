@@ -6,6 +6,8 @@ class Brewery < ActiveRecord::Base
   validates :year, numericality: { greater_than_or_equal_to: 1042,
                                     only_integer: true }
   validate :year_cant_be_past
+  scope :active, -> { where active:true }
+  scope :retired, -> { where active:[nil,false] }
 
   def year_cant_be_past
     if year > Date.today.year
@@ -25,5 +27,9 @@ class Brewery < ActiveRecord::Base
 
   def to_s
   	name
+  end
+
+  def self.top(n)
+    Brewery.all.sort_by{ |b| -(b.average_rating||0) }.take(n)
   end
 end
