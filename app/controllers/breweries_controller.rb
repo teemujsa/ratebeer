@@ -6,8 +6,22 @@ class BreweriesController < ApplicationController
   # GET /breweries
   # GET /breweries.json
   def index
+    @breweries = Brewery.all
     @active_breweries = Brewery.active
     @retired_breweries = Brewery.retired
+    order = params[:order] || 'name'
+    session[:reverse_sort] = !(session[:reverse_sort])
+    @active_breweries = sort_by_param @active_breweries, order, session[:reverse_sort]
+    @retired_breweries = sort_by_param @retired_breweries, order, session[:reverse_sort]
+  end
+
+  def sort_by_param(breweries, order, reverse)
+    sorted = case order
+      when 'name' then breweries.sort_by{ |b| b.name }
+      when 'year' then breweries.sort_by{ |b| -b.year }
+    end
+    return sorted.reverse if reverse
+    sorted
   end
 
   # GET /breweries/1
@@ -22,6 +36,9 @@ class BreweriesController < ApplicationController
 
   # GET /breweries/1/edit
   def edit
+  end
+
+  def nglist
   end
 
   # POST /breweries

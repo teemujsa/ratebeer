@@ -34,6 +34,8 @@ gem 'sdoc', '~> 0.4.0', group: :doc
 # Use Capistrano for deployment
 # gem 'capistrano-rails', group: :development
 gem 'bootstrap-sass'
+gem 'jquery-turbolinks'
+
 group :development do
   gem 'rails_layout'
 end
@@ -77,6 +79,8 @@ group :test do
   gem 'simplecov', require: false
   gem 'rspec-its'
   gem 'webmock'
+  gem 'selenium-webdriver'
+  gem 'database_cleaner'
 end
 
 ruby '2.3.0'
