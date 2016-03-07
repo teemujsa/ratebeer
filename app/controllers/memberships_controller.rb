@@ -22,6 +22,18 @@ class MembershipsController < ApplicationController
   def edit
   end
 
+  def approve
+    beer_club = BeerClub.find(params[:beer_club_id].to_i)
+    if(current_user and beer_club.members.include? current_user)
+      membership = beer_club.applications.select{|x| x.user.id == params[:user_id].to_i}.first
+      membership.confirmed = true
+      membership.save
+      redirect_to :back, notice: "Member #{membership.user.username} confirmed"
+    else
+      redirect_to signin_path, notice: "Sign in as a member to approve"
+    end
+  end
+
   # POST /memberships
   # POST /memberships.json
   def create

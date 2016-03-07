@@ -24,6 +24,9 @@ Rails.application.routes.draw do
   get 'beerlist', to:'beers#list'
   get 'ngbeerlist', to:'beers#nglist'
   get 'brewerylist', to:'breweries#nglist'
+  get 'memberapproval', to:'memberships#approve'
+  get '/auth/:provider/callback', to: 'sessions#create_oauth'
+  get '/auth/failure', to: 'sessions#failure'
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
 

@@ -1,4 +1,15 @@
 class SessionsController < ApplicationController
+
+  def create_oauth
+    redirect_to "/"
+    byebug
+  end
+
+  def failure
+    redirect_to "/"
+    byebug
+  end
+
   def new
     # renderöi kirjautumissivun
   end

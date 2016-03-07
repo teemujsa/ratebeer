@@ -51,9 +51,8 @@ $(document).ready(function () {
         BEERS.show();
         e.preventDefault();
     });
-    console.log("d1");
+    
     if ( $("#beertable").length>0 ) {
-console.log("d2");
       $.getJSON('beers.json', function (beers) {
         BEERS.list = beers;
         BEERS.sort_by_name;

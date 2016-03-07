@@ -12,10 +12,9 @@ class BeerClubsController < ApplicationController
   # GET /beer_clubs/1
   # GET /beer_clubs/1.json
   def show
-    if @beer_club.members.map{|m| m.id}.exclude? current_user.id
+    if current_user.nil? or @beer_club.members.map{|m| m.id}.exclude? current_user.id
       @membership = Membership.new
       @membership.beer_club = @beer_club
-      @membership.user = current_user
     else
       @membership = @beer_club.memberships.select{|m| m.user.id == current_user.id}.first
     end
@@ -37,6 +36,7 @@ class BeerClubsController < ApplicationController
 
     respond_to do |format|
       if @beer_club.save
+        Membership.create(beer_club:@beer_club, user:current_user, confirmed:true)
         format.html { redirect_to @beer_club, notice: 'Beer club was successfully created.' }
         format.json { render :show, status: :created, location: @beer_club }
       else

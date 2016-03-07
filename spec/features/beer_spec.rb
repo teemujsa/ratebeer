@@ -5,12 +5,13 @@ describe "Beer" do
   before :each do
   	FactoryGirl.create :user
     sign_in(username:"Pekka", password:"Foobar1")
+    FactoryGirl.create :brewery, name:"testbrew"
     FactoryGirl.create :style
   end
 
   it "is added to database if name is valid" do
     visit new_beer_path
-    #save_and_open_page
+    save_and_open_page
     fill_in('beer_name', with:'validi')
     expect{
       click_button "Create Beer"

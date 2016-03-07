@@ -2,28 +2,49 @@
 
 <h1><%= @beer_club.name %></h1>
 
-<table>
+<table class="table table-hover">
 
   <tbody>
   <p> Founded <%= @beer_club.founded %> </p>
-  <h2>Members</h2>
+  <h3>Members</h3>
     <ul>
 	 <% @beer_club.members.each do |member| %>
-	   <li> <%= link_to member.username, member %> </li>
+	  <tr>
+        <td> <%= link_to member.username, member %> </td>
+      </tr>
 	 <% end %>
 	</ul>
   </tbody>
 </table>
+
+<table class="table table-hover">
+
+  <tbody>
+  <p> Founded <%= @beer_club.founded %> </p>
+  <h3>Applicants</h3>
+    <ul>
+	 <% @beer_club.applicants.each do |applicant| %>
+	  <tr>
+        <td> <%= link_to applicant.username, applicant %> </td>
+        <% if current_user and @beer_club.members.include? current_user %>
+        	<td> <%= link_to 'confirm', memberapproval_path(beer_club_id:@beer_club.id, user_id:applicant.id), class:"btn btn-primary" %> </td>
+        <% end %>
+      </tr>
+	 <% end %>
+	</ul>
+  </tbody>
+</table>
+
 <% if current_user %>
 	<% if @beer_club.members.map{|m| m.id}.exclude? current_user.id %>
 		<%= form_for(@membership) do |f| %>
 	    	<%= f.hidden_field :beer_club_id %>
-	    	<%= f.submit value:"join the club" %>
+	    	<%= f.submit value:"join the club", class:"btn btn-primary" %>
 		<% end %>
 	<% else %>
 		<%= form_for(@membership, method: "delete") do |f| %>
 	      <%= f.hidden_field :beer_club_id %>
-	      <%= f.submit value: "end the membership" %>
+	      <%= f.submit value: "end the membership", class:"btn btn-danger" %>
 	   <% end %>
 	<% end %>
 <% end %>
